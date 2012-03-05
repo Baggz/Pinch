@@ -28,7 +28,7 @@ data = JSON.stringify(data);
 pinch(data, 'users[0].name', 'Juan');
 ```
 
-To be honest, in the first example Pinch is overkill. Pinch is very useful for **replacing multiple keys**, e.g. converting some values to a number. See the following example.
+To be honest, in the first example Pinch is overkill. Pinch is very useful for **replacing multiple keys**, *e.g. converting some values to a number*. See the following example.
 
 ```javascript
 var data = {
@@ -79,7 +79,7 @@ Releases are available for download from GitHub.
 | `pinch.min.js` | *compressed, without comments* | 1.7 KB (746 bytes gzipped) | [Download](https://raw.github.com/Baggz/Pinch/master/dist/latest.min.js) |
 
 <a name="Usage"></a>
-## Usage [&uarr;](#contents)
+## Usage [&uarr;](#Contents)
 
 ### Browser
 
@@ -110,7 +110,7 @@ require(['pinch'], function(pinch) {
 ```
 
 <a name="Documentation"></a>
-## Documentation [&uarr;](#contents)
+## Documentation [&uarr;](#Contents)
 
 ### pinch(instance, pattern, replacement[, callback])
 
@@ -175,7 +175,7 @@ pinch(instance, /id/, function(path, key, value) {
 ```
 
 <a name="Compatibility"></a>
-## Compatibility [&uarr;](#contents)
+## Compatibility [&uarr;](#Contents)
 
 ### Node.js
 
@@ -196,21 +196,21 @@ From version **0.6.0**.
 *Testing in progress...*
 
 <a name="Tests"></a>
-## Tests [&uarr;](#tests)
+## Tests [&uarr;](#Cests)
 
 ```
 $ npm test
 ```
 
 <a name="Contributors"></a>
-## Contributors [&uarr;](#contents)
+## Contributors [&uarr;](#Contents)
 
 The following are the major contributors of Amanda (in random order).
 
 * **František Hába** ([@Baggz](https://github.com/Baggz))
 
 <a name="License"></a>
-## License [&uarr;](#contents)
+## License [&uarr;](#Contents)
 
 (The MIT License)
 
