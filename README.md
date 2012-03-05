@@ -28,6 +28,27 @@ data = JSON.stringify(data);
 pinch(data, 'users[0].name', 'Juan');
 ```
 
+Well, in this case Pinch is overkill, but... Pinch is very useful for replacing multiple keys, e.g. converting some values to a number.
+
+```javascript
+var data = {
+  user: {
+    id: '123'
+  },
+  request: {
+    id: '456'
+  },
+  book: {
+    id: '789'
+  }
+};
+
+// Converts all ids to a number
+pinch(data, /id/, function(path, key, value) {
+  return parseInt(value);
+});
+```
+
 <a name="Contents"></a>
 ### Contents
 
