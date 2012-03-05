@@ -28,7 +28,7 @@ data = JSON.stringify(data);
 pinch(data, 'users[0].name', 'Juan');
 ```
 
-Well, in this case Pinch is overkill, but... Pinch is very useful for replacing multiple keys, e.g. converting some values to a number.
+To be honest, in the first example Pinch is overkill. Pinch is very useful for **replacing multiple keys**, e.g. converting some values to a number. See the following example.
 
 ```javascript
 var data = {
