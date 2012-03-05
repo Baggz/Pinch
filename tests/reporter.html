@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+
+  <title>Reporter</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./css/mocha.css">
+  <!-- /Styles -->
+  
+  <!-- JavaScripts -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="https://raw.github.com/visionmedia/mocha/master/mocha.js"></script>
+  <script src="https://raw.github.com/LearnBoost/expect.js/master/expect.js"></script>
+  <script src="../src/pinch.js"></script>
+  <script>mocha.setup('tdd')</script>
+  <!-- /JavaScripts -->
+
+  <!-- Tests -->
+  <script src="./tests.js"></script>
+  <!-- /Tests -->
+
+  <script>
+    $(function () {
+      return mocha.run();
+    });
+  </script>
+
+</head>
+<body>
+
+  <!-- Mocha -->
+  <div id="mocha">
+  </div>
+  <!-- /Mocha -->
+
+</body>
+</html>
