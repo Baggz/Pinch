@@ -1,6 +1,6 @@
 # Pinch
 
-[![Build Status](https://secure.travis-ci.org/Baggz/Pinch.png)](http://travis-ci.org/Baggz/Pinch)
+[![Build Status](https://secure.travis-ci.org/Baggz/Pinch.png?branch=master)](http://travis-ci.org/Baggz/Pinch)
 
 Pinch is a small JavaScript utility which is able to **replace any data in a JavaScript object** (or JSON). You just need to provide a key *(for instance `users[0].name`)* in a *dot notation* or a *square bracket notation* and a replacement. The replacement can be a *string* or a *function* to be called for each match. Pinch returns a *new* JavaScript object (or JSON).
 
