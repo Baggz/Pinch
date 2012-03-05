@@ -196,7 +196,7 @@ From version **0.6.0**.
 *Testing in progress...*
 
 <a name="Tests"></a>
-## Tests [&uarr;](#Cests)
+## Tests [&uarr;](#Contents)
 
 ```
 $ npm test
