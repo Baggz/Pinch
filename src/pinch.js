@@ -18,8 +18,26 @@
     return Object.prototype.toString.call(input) === '[object Array]';
   };
 
+  /**
+   * IsObject
+   *
+   * @param {object} input
+   */
   var isObject = function(input) {
     return Object.prototype.toString.call(input) === '[object Object]';
+  };
+
+  /**
+   * IsEqualArray
+   *
+   * @param {object} arr1
+   * @param {object} arr2
+   */
+  var isEqualArray = function(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    return arr1.every(function(value, index, context) {
+      return arr2[index] === value;
+    });
   };
 
   /**
@@ -73,6 +91,7 @@
 
   };
 
+  var treeRe = /([a-zA-Z0-9\s]+)/g;
 
   /**
    * Pinch
@@ -103,7 +122,7 @@
       this.instance = clone(instance);
     }
 
-    this.pattern = pattern;
+    this.pattern = (typeof pattern === 'string') ? pattern.replace(/'/g, '"') : pattern;
     this.replacement = replacement;
 
     // Creates an index for the passed instance
@@ -122,7 +141,6 @@
     var self = this;
 
     this.index = this.index || [];
-
 
     path = path || '';
 
@@ -170,8 +188,15 @@
       }
 
       // If the pattern is a string and matches the key
-      if (typeof self.pattern === 'string' && value === self.pattern) {
-        return self.replaceValue(value);
+      if (typeof self.pattern === 'string') {
+
+        var valueTree = value.match(treeRe),
+            patternTree = self.pattern.match(treeRe);
+
+        if (isEqualArray(valueTree, patternTree)) {
+          return self.replaceValue(value);
+        }
+
       }
 
     });
@@ -190,7 +215,7 @@
 
     var self = this;
 
-    var tree = path.match(/([a-zA-Z0-9\s]+)/g);
+    var tree = path.match(treeRe);
 
     tree.reduce(function(previousValue, currentValue, index) {
       if (index === tree.length - 1) {
