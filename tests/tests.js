@@ -898,3 +898,87 @@ suite('JSON', function() {
   });
 
 });
+
+/**
+ * More ambitious notations
+ * --------------------
+ */
+suite('More Ambitious Notations', function() {
+
+  var testObject = {
+    user: {
+      profile: {
+        name: {
+          firstName: {
+            "my First name": {
+              name: 'František'
+            }
+          }
+        }
+      }
+    }
+  };
+
+  test("using the ‘user.profile.name.firstName['my First name'].name’ notation", function() {
+    var result = pinch(testObject, "user.profile.name.firstName['my First name'].name", 'Test');
+    expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
+  });
+
+  test("using the ‘['user'].profile.name.firstName['my First name'].name’ notation", function() {
+    var result = pinch(testObject, "['user'].profile.name.firstName['my First name'].name", 'Test');
+    expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
+  });
+
+  test("using the ‘['user']['profile'].name.firstName['my First name'].name’ notation", function() {
+    var result = pinch(testObject, "['user']['profile'].name.firstName['my First name'].name", 'Test');
+    expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
+  });
+
+  test("using the ‘['user']['profile']['name'].firstName['my First name'].name’ notation", function() {
+    var result = pinch(testObject, "['user']['profile']['name'].firstName['my First name'].name", 'Test');
+    expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
+  });
+
+  test("using the ‘['user']['profile']['name']['firstName']['my First name'].name’ notation", function() {
+    var result = pinch(testObject, "['user']['profile']['name']['firstName']['my First name'].name", 'Test');
+    expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
+  });
+
+  test("using the ‘['user']['profile']['name']['firstName']['my First name']['name']’ notation", function() {
+    var result = pinch(testObject, "['user']['profile']['name']['firstName']['my First name']['name']", 'Test');
+    expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
+  });
+
+  // --------------------
+
+  test('using the ‘user.profile.name.firstName["my First name"].name’ notation', function() {
+    var result = pinch(testObject, 'user.profile.name.firstName["my First name"].name', "Test");
+    expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
+  });
+
+  test('using the ‘["user"].profile.name.firstName["my First name"].name’ notation', function() {
+    var result = pinch(testObject, '["user"].profile.name.firstName["my First name"].name', "Test");
+    expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
+  });
+
+  test('using the ‘["user"]["profile"].name.firstName["my First name"].name’ notation', function() {
+    var result = pinch(testObject, '["user"]["profile"].name.firstName["my First name"].name', "Test");
+    expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
+  });
+
+  test('using the ‘["user"]["profile"]["name"].firstName["my First name"].name’ notation', function() {
+    var result = pinch(testObject, '["user"]["profile"]["name"].firstName["my First name"].name', "Test");
+    expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
+  });
+
+  test('using the ‘["user"]["profile"]["name"]["firstName"]["my First name"].name’ notation', function() {
+    var result = pinch(testObject, '["user"]["profile"]["name"]["firstName"]["my First name"].name', "Test");
+    expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
+  });
+
+  test('using the ‘["user"]["profile"]["name"]["firstName"]["my First name"]["name"]’ notation', function() {
+    var result = pinch(testObject, '["user"]["profile"]["name"]["firstName"]["my First name"]["name"]', "Test");
+    expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
+  });
+
+});
