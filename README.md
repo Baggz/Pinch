@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/Baggz/Pinch.png?branch=master)](http://travis-ci.org/Baggz/Pinch)
 
-Pinch is a small JavaScript utility which is able to **replace any data in a JavaScript object** (or JSON). You just need to provide a key *(for instance `users[0].name`)* in a *dot notation* or a *square bracket notation* and a replacement. The replacement can be a *string* or a *function* to be called for each match. Pinch returns a *new* JavaScript object (or JSON).
+Pinch is a small JavaScript utility which is able to **replace any data in a JavaScript object** (or JSON). You just need to provide a key *(for instance `users[0].name`)* in a *dot notation* or a *square bracket notation* and a replacement. The replacement can be a *string* or a *function* to be called for each match.
 
 ### Example
 
@@ -75,8 +75,8 @@ Releases are available for download from GitHub.
 
 | **Version** | **Description** | **Size** | **Action** |
 |:------------|:----------------|:---------|:-----------|
-| `pinch.js` | *uncompressed, with comments* | 4.59 KB (1.46 KB gzipped) | [Download](https://raw.github.com/Baggz/Pinch/master/dist/latest.js) |
-| `pinch.min.js` | *compressed, without comments* | 1.7 KB (746 bytes gzipped) | [Download](https://raw.github.com/Baggz/Pinch/master/dist/latest.min.js) |
+| `pinch.js` | *uncompressed, with comments* | 4.71 KB (1.51 KB gzipped) | [Download](https://raw.github.com/Baggz/Pinch/master/dist/latest.js) |
+| `pinch.min.js` | *compressed, without comments* | 1.67 KB (761 bytes gzipped) | [Download](https://raw.github.com/Baggz/Pinch/master/dist/latest.min.js) |
 
 <a name="Usage"></a>
 ## Usage [&uarr;](#Contents)

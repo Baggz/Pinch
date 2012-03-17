@@ -4,6 +4,88 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 /**
+ * IsArray
+ *
+ * @param {object} input
+ */
+var isArray = function(input) {
+  return Object.prototype.toString.call(input) === '[object Array]';
+};
+
+/**
+ * IsObject
+ *
+ * @param {object} input
+ */
+var isObject = function(input) {
+  return Object.prototype.toString.call(input) === '[object Object]';
+};
+
+/**
+ * IsEqualArray
+ *
+ * @param {object} arr1
+ * @param {object} arr2
+ */
+var isEqualArray = function(arr1, arr2) {
+  if (arr1.length !== arr2.length) return false;
+  return arr1.every(function(value, index, context) {
+    return arr2[index] === value;
+  });
+};
+
+/**
+ * Each
+ *
+ * @param {object} input
+ * @param {function} iterator
+ * @param {object} context
+ */
+var each = function(input, iterator, context) {
+  var key, len;
+  if (isArray(input)) {
+    for (key = 0, len = input.length; key < len; key++) {
+      iterator.apply(context, [key, input[key], input]);
+    }
+    return;
+  }
+  for (key in input) {
+    if (input.hasOwnProperty(key)) {
+      iterator.apply(context, [key, input[key], input]);
+    }
+  }
+};
+
+/**
+ * Clone
+ *
+ * @param {object} input
+ */
+var clone = function(input) {
+
+  var output;
+
+  if (isArray(input)) {
+    output = [];
+    each(input, function(index, value) {
+      output.push(clone(value));
+    });
+    return output;
+  }
+
+  if (isObject(input)) {
+    output = {};
+    each(input, function(key, value) {
+      output[key] = clone(value);
+    });
+    return output;
+  }
+
+  return input;
+
+};
+
+/**
  * Pinch
  * --------------------
  */
@@ -55,7 +137,7 @@ suite('Arguments', function() {
  */
 suite('Using a function as a replacement', function() {
 
-  var testObject = {
+  var testObjectDefault = {
     name: 'František',
     surname: 'Hába',
     books: [
@@ -77,6 +159,8 @@ suite('Using a function as a replacement', function() {
   // path, key, value)
 
   test('using the ‘name’ notation', function() {
+
+    var testObject = clone(testObjectDefault);
 
     var result = pinch(testObject, 'name', function(path, key, value) {
       expect(path).to.be.eql('name');
@@ -108,6 +192,8 @@ suite('Using a function as a replacement', function() {
 
   test('using the ‘surname’ notation', function() {
 
+    var testObject = clone(testObjectDefault);
+
     var result = pinch(testObject, 'surname', function(path, key, value) {
       expect(path).to.be.eql('surname');
       expect(key).to.be.eql('surname');
@@ -138,6 +224,8 @@ suite('Using a function as a replacement', function() {
 
   test('using the ‘books[0]’ notation', function() {
 
+    var testObject = clone(testObjectDefault);
+
     var result = pinch(testObject, 'books[0]', function(path, key, value) {
       expect(path).to.be.eql('books[0]');
       expect(key).to.be.eql('0');
@@ -167,6 +255,8 @@ suite('Using a function as a replacement', function() {
   });
 
   test('using the ‘books[0]’ notation in order to replace an object', function() {
+
+    var testObject = clone(testObjectDefault);
 
     var result = pinch(testObject, 'books[0]', function(path, key, value) {
       expect(path).to.be.eql('books[0]');
@@ -202,6 +292,8 @@ suite('Using a function as a replacement', function() {
 
   test('using the ‘books[1]’ notation', function() {
 
+    var testObject = clone(testObjectDefault);
+
     var result = pinch(testObject, 'books[1]', function(path, key, value) {
       expect(path).to.be.eql('books[1]');
       expect(key).to.be.eql('1');
@@ -231,6 +323,8 @@ suite('Using a function as a replacement', function() {
   });
 
   test('using the ‘books[2]’ notation', function() {
+
+    var testObject = clone(testObjectDefault);
 
     var result = pinch(testObject, 'books[2]', function(path, key, value) {
       expect(path).to.be.eql('books[2]');
@@ -262,6 +356,8 @@ suite('Using a function as a replacement', function() {
 
   test('using the ‘books[0].title’ notation', function() {
 
+    var testObject = clone(testObjectDefault);
+
     var result = pinch(testObject, 'books[0].title', function(path, key, value) {
       expect(path).to.be.eql('books[0].title');
       expect(key).to.be.eql('title');
@@ -292,6 +388,8 @@ suite('Using a function as a replacement', function() {
 
   test('using the ‘books[1].title’ notation', function() {
 
+    var testObject = clone(testObjectDefault);
+
     var result = pinch(testObject, 'books[1].title', function(path, key, value) {
       expect(path).to.be.eql('books[1].title');
       expect(key).to.be.eql('title');
@@ -321,6 +419,8 @@ suite('Using a function as a replacement', function() {
   });
 
   test('using the ‘books[2].title’ notation', function() {
+
+    var testObject = clone(testObjectDefault);
 
     var result = pinch(testObject, 'books[2].title', function(path, key, value) {
       expect(path).to.be.eql('books[2].title');
@@ -358,7 +458,7 @@ suite('Using a function as a replacement', function() {
  */
 suite('Replacing an object', function() {
 
-  var testObject = {
+  var testObjectDefault = {
     name: 'František',
     surname: 'Hába',
     books: [
@@ -378,6 +478,7 @@ suite('Replacing an object', function() {
   };
 
   test('using the ‘name’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, 'name', 'Marjorie');
     expect(result).to.be.eql({
       name: 'Marjorie',
@@ -400,6 +501,7 @@ suite('Replacing an object', function() {
   });
 
   test('using the ‘surname’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, 'surname', 'Ridder');
     expect(result).to.be.eql({
       name: 'František',
@@ -422,6 +524,7 @@ suite('Replacing an object', function() {
   });
 
   test('using the ‘books[0]’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, 'books[0]', 'Test');
     expect(result).to.be.eql({
       name: 'František',
@@ -441,6 +544,7 @@ suite('Replacing an object', function() {
   });
 
   test('using the ‘books[0]’ notation in order to replace an object', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, 'books[0]', { foo: 'bar' });
     expect(result).to.be.eql({
       name: 'František',
@@ -462,6 +566,7 @@ suite('Replacing an object', function() {
   });
 
   test('using the ‘books[1]’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, 'books[1]', 'Test');
     expect(result).to.be.eql({
       name: 'František',
@@ -481,6 +586,7 @@ suite('Replacing an object', function() {
   });
 
   test('using the ‘books[2]’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, 'books[2]', 'Test');
     expect(result).to.be.eql({
       name: 'František',
@@ -500,6 +606,7 @@ suite('Replacing an object', function() {
   });
 
   test('using the ‘books[0].title’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, 'books[0].title', 'SVN');
     expect(result).to.be.eql({
       name: 'František',
@@ -522,6 +629,7 @@ suite('Replacing an object', function() {
   });
 
   test('using the ‘books[1].title’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, 'books[1].title', 'The Catcher');
     expect(result).to.be.eql({
       name: 'František',
@@ -544,6 +652,7 @@ suite('Replacing an object', function() {
   });
 
   test('using the ‘books[2].title’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, 'books[2].title', 'The Invisible Art');
     expect(result).to.be.eql({
       name: 'František',
@@ -566,6 +675,7 @@ suite('Replacing an object', function() {
   });
 
   test('using a regular expression to replace all books', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, /books\[.+\]/, 'Test');
     expect(result).to.be.eql({
       name: 'František',
@@ -579,6 +689,7 @@ suite('Replacing an object', function() {
   });
 
   test('using a regular expression to replace all titles', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, /books\[.+\]\.title/, 'Test');
     expect(result).to.be.eql({
       name: 'František',
@@ -601,6 +712,7 @@ suite('Replacing an object', function() {
   });
 
   test('using a regular expression to replace all authors', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, /books\[.+\]\.author/, 'Test');
     expect(result).to.be.eql({
       name: 'František',
@@ -905,7 +1017,7 @@ suite('JSON', function() {
  */
 suite('More Ambitious Notations', function() {
 
-  var testObject = {
+  var testObjectDefault = {
     user: {
       profile: {
         name: {
@@ -920,31 +1032,37 @@ suite('More Ambitious Notations', function() {
   };
 
   test("using the ‘user.profile.name.firstName['my First name'].name’ notation", function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, "user.profile.name.firstName['my First name'].name", 'Test');
     expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
   });
 
   test("using the ‘['user'].profile.name.firstName['my First name'].name’ notation", function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, "['user'].profile.name.firstName['my First name'].name", 'Test');
     expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
   });
 
   test("using the ‘['user']['profile'].name.firstName['my First name'].name’ notation", function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, "['user']['profile'].name.firstName['my First name'].name", 'Test');
     expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
   });
 
   test("using the ‘['user']['profile']['name'].firstName['my First name'].name’ notation", function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, "['user']['profile']['name'].firstName['my First name'].name", 'Test');
     expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
   });
 
   test("using the ‘['user']['profile']['name']['firstName']['my First name'].name’ notation", function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, "['user']['profile']['name']['firstName']['my First name'].name", 'Test');
     expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
   });
 
   test("using the ‘['user']['profile']['name']['firstName']['my First name']['name']’ notation", function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, "['user']['profile']['name']['firstName']['my First name']['name']", 'Test');
     expect(result.user.profile.name.firstName['my First name'].name).to.be.eql('Test');
   });
@@ -952,31 +1070,37 @@ suite('More Ambitious Notations', function() {
   // --------------------
 
   test('using the ‘user.profile.name.firstName["my First name"].name’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, 'user.profile.name.firstName["my First name"].name', "Test");
     expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
   });
 
   test('using the ‘["user"].profile.name.firstName["my First name"].name’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, '["user"].profile.name.firstName["my First name"].name', "Test");
     expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
   });
 
   test('using the ‘["user"]["profile"].name.firstName["my First name"].name’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, '["user"]["profile"].name.firstName["my First name"].name', "Test");
     expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
   });
 
   test('using the ‘["user"]["profile"]["name"].firstName["my First name"].name’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, '["user"]["profile"]["name"].firstName["my First name"].name', "Test");
     expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
   });
 
   test('using the ‘["user"]["profile"]["name"]["firstName"]["my First name"].name’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, '["user"]["profile"]["name"]["firstName"]["my First name"].name', "Test");
     expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
   });
 
   test('using the ‘["user"]["profile"]["name"]["firstName"]["my First name"]["name"]’ notation', function() {
+    var testObject = clone(testObjectDefault);
     var result = pinch(testObject, '["user"]["profile"]["name"]["firstName"]["my First name"]["name"]', "Test");
     expect(result.user.profile.name.firstName["my First name"].name).to.be.eql('Test');
   });

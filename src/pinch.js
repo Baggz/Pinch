@@ -62,35 +62,6 @@
     }
   };
 
-  /**
-   * Clone
-   *
-   * @param {object} input
-   */
-  var clone = function(input) {
-
-    var output;
-
-    if (isArray(input)) {
-      output = [];
-      each(input, function(index, value) {
-        output.push(clone(value));
-      });
-      return output;
-    }
-
-    if (isObject(input)) {
-      output = {};
-      each(input, function(key, value) {
-        output[key] = clone(value);
-      });
-      return output;
-    }
-
-    return input;
-
-  };
-
   var treeRe = /([a-zA-Z0-9\s]+)/g;
 
   /**
@@ -119,7 +90,7 @@
       this.instance = JSON.parse(instance);
       this.json = true;
     } else {
-      this.instance = clone(instance);
+      this.instance = instance;
     }
 
     this.pattern = (typeof pattern === 'string') ? pattern.replace(/'/g, '"') : pattern;
