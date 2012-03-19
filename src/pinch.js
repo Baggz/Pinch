@@ -62,7 +62,49 @@
     }
   };
 
-  var treeRe = /([a-zA-Z0-9\s]+)/g;
+  /**
+   * ParseNotation
+   *
+   * @param {string} notation
+   */
+  var parseNotation = function(notation) {
+
+    var chunks = [];
+    var openBracket = false;
+    var i = 0;
+    var len = notation.length;
+    var tempChunk = '';
+
+    var addChunk = function() {
+      if (tempChunk) {
+        chunks.push(tempChunk);
+        tempChunk = '';  
+      }
+    };
+
+    for (; i < len; i++) {
+      if (notation[i].match(/\[|\]/)) {
+        addChunk();
+        if (notation[i] === ']') {
+          openBracket = false;
+        } else {
+          openBracket = true;
+        }
+      } else if (notation[i] !== '"' && notation[i] !== '\'') {
+        if (notation[i] === '.' && !openBracket) {
+          addChunk();
+        } else {
+          tempChunk += notation[i];
+        }
+      }
+      if (i === len - 1) {
+        addChunk();
+      }
+    }
+
+    return chunks;
+
+  };
 
   /**
    * Pinch
@@ -132,7 +174,7 @@
       } else  {
         currentPath = path + '["' + key + '"]';
       }
-
+      console.log(currentPath);
       self.index.push(currentPath);
 
       if (typeof value === 'object') {
@@ -161,8 +203,8 @@
       // If the pattern is a string and matches the key
       if (typeof self.pattern === 'string') {
 
-        var valueTree = value.match(treeRe),
-            patternTree = self.pattern.match(treeRe);
+        var valueTree = parseNotation(value);
+        var patternTree = parseNotation(self.pattern);
 
         if (isEqualArray(valueTree, patternTree)) {
           return self.replaceValue(value);
@@ -186,7 +228,7 @@
 
     var self = this;
 
-    var tree = path.match(treeRe);
+    var tree = parseNotation(path);
 
     tree.reduce(function(previousValue, currentValue, index) {
       if (index === tree.length - 1) {

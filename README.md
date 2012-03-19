@@ -75,8 +75,8 @@ Releases are available for download from GitHub.
 
 | **Version** | **Description** | **Size** | **Action** |
 |:------------|:----------------|:---------|:-----------|
-| `pinch.js` | *uncompressed, with comments* | 4.71 KB (1.51 KB gzipped) | [Download](https://raw.github.com/Baggz/Pinch/master/dist/latest.js) |
-| `pinch.min.js` | *compressed, without comments* | 1.67 KB (761 bytes gzipped) | [Download](https://raw.github.com/Baggz/Pinch/master/dist/latest.min.js) |
+| `pinch.js` | *uncompressed, with comments* | 5.34 KB (1.68 KB gzipped) | [Download](https://raw.github.com/Baggz/Pinch/master/dist/latest.js) |
+| `pinch.min.js` | *compressed, without comments* | 1.85 KB (852 bytes gzipped) | [Download](https://raw.github.com/Baggz/Pinch/master/dist/latest.min.js) |
 
 <a name="Usage"></a>
 ## Usage [&uarr;](#Contents)

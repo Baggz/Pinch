@@ -18,8 +18,26 @@
     return Object.prototype.toString.call(input) === '[object Array]';
   };
 
+  /**
+   * IsObject
+   *
+   * @param {object} input
+   */
   var isObject = function(input) {
     return Object.prototype.toString.call(input) === '[object Object]';
+  };
+
+  /**
+   * IsEqualArray
+   *
+   * @param {object} arr1
+   * @param {object} arr2
+   */
+  var isEqualArray = function(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    return arr1.every(function(value, index, context) {
+      return arr2[index] === value;
+    });
   };
 
   /**
@@ -45,34 +63,48 @@
   };
 
   /**
-   * Clone
+   * ParseNotation
    *
-   * @param {object} input
+   * @param {string} notation
    */
-  var clone = function(input) {
+  var parseNotation = function(notation) {
 
-    var output;
+    var chunks = [];
+    var openBracket = false;
+    var i = 0;
+    var len = notation.length;
+    var tempChunk = '';
 
-    if (isArray(input)) {
-      output = [];
-      each(input, function(index, value) {
-        output.push(clone(value));
-      });
-      return output;
+    var addChunk = function() {
+      if (tempChunk) {
+        chunks.push(tempChunk);
+        tempChunk = '';  
+      }
+    };
+
+    for (; i < len; i++) {
+      if (notation[i].match(/\[|\]/)) {
+        addChunk();
+        if (notation[i] === ']') {
+          openBracket = false;
+        } else {
+          openBracket = true;
+        }
+      } else if (notation[i] !== '"' && notation[i] !== '\'') {
+        if (notation[i] === '.' && !openBracket) {
+          addChunk();
+        } else {
+          tempChunk += notation[i];
+        }
+      }
+      if (i === len - 1) {
+        addChunk();
+      }
     }
 
-    if (isObject(input)) {
-      output = {};
-      each(input, function(key, value) {
-        output[key] = clone(value);
-      });
-      return output;
-    }
-
-    return input;
+    return chunks;
 
   };
-
 
   /**
    * Pinch
@@ -100,10 +132,10 @@
       this.instance = JSON.parse(instance);
       this.json = true;
     } else {
-      this.instance = clone(instance);
+      this.instance = instance;
     }
 
-    this.pattern = pattern;
+    this.pattern = (typeof pattern === 'string') ? pattern.replace(/'/g, '"') : pattern;
     this.replacement = replacement;
 
     // Creates an index for the passed instance
@@ -122,7 +154,6 @@
     var self = this;
 
     this.index = this.index || [];
-
 
     path = path || '';
 
@@ -143,7 +174,7 @@
       } else  {
         currentPath = path + '["' + key + '"]';
       }
-
+      console.log(currentPath);
       self.index.push(currentPath);
 
       if (typeof value === 'object') {
@@ -170,8 +201,15 @@
       }
 
       // If the pattern is a string and matches the key
-      if (typeof self.pattern === 'string' && value === self.pattern) {
-        return self.replaceValue(value);
+      if (typeof self.pattern === 'string') {
+
+        var valueTree = parseNotation(value);
+        var patternTree = parseNotation(self.pattern);
+
+        if (isEqualArray(valueTree, patternTree)) {
+          return self.replaceValue(value);
+        }
+
       }
 
     });
@@ -190,7 +228,7 @@
 
     var self = this;
 
-    var tree = path.match(/([a-zA-Z0-9\s]+)/g);
+    var tree = parseNotation(path);
 
     tree.reduce(function(previousValue, currentValue, index) {
       if (index === tree.length - 1) {

@@ -1106,3 +1106,21 @@ suite('More Ambitious Notations', function() {
   });
 
 });
+
+/**
+ * Even More ambitious notations
+ * --------------------
+ */
+suite('Even More Ambitious Notations', function() {
+
+  var testObjectDefault = {
+    'user.name': 'František'
+  };
+
+  test('using the ‘["user.name"]’ notation', function() {
+    var testObject = clone(testObjectDefault);
+    var result = pinch(testObject, '["user.name"]', 'Test');
+    expect(testObject['user.name']).to.be.eql('Test');
+  });
+
+});
