@@ -174,7 +174,6 @@
       } else  {
         currentPath = path + '["' + key + '"]';
       }
-      console.log(currentPath);
       self.index.push(currentPath);
 
       if (typeof value === 'object') {
