@@ -121,7 +121,7 @@
     // be a string, an object or a function.
     var validInstance = ['string', 'object'].indexOf(typeof instance) !== -1;
     var validPattern = typeof pattern === 'string' || isRegEx(pattern);
-    var validReplacement = ['string', 'object', 'function'].indexOf(typeof replacement) !== -1;
+    var validReplacement = ['string', 'object', 'boolean', 'function'].indexOf(typeof replacement) !== -1;
 
     // If any of the arguments is not valid, returns undefined
     if (!validInstance || !validPattern || !validReplacement) {
