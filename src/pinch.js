@@ -78,7 +78,7 @@
     var addChunk = function() {
       if (tempChunk) {
         chunks.push(tempChunk);
-        tempChunk = '';  
+        tempChunk = '';
       }
     };
 
@@ -186,7 +186,7 @@
 
   /**
    * Replace
-   * 
+   *
    */
   Pinch.prototype.replace = function() {
 

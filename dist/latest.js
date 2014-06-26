@@ -78,7 +78,7 @@
     var addChunk = function() {
       if (tempChunk) {
         chunks.push(tempChunk);
-        tempChunk = '';  
+        tempChunk = '';
       }
     };
 
@@ -174,7 +174,6 @@
       } else  {
         currentPath = path + '["' + key + '"]';
       }
-      console.log(currentPath);
       self.index.push(currentPath);
 
       if (typeof value === 'object') {
@@ -187,7 +186,7 @@
 
   /**
    * Replace
-   * 
+   *
    */
   Pinch.prototype.replace = function() {
 
