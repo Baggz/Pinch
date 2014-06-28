@@ -1,0 +1,32 @@
+{
+  "name": "Pinch",
+  "version": "0.1.3",
+  "homepage": "https://github.com/Baggz/Pinch",
+  "authors": [
+    "František Hába <hello@frantisekhaba.com>"
+  ],
+  "description": "String.replace for JavaScript objects (and JSON).",
+  "main": "dist/latest.js",
+  "keywords": [
+      "JSON",
+      "JSON replace",
+      "JSON find replace",
+      "object replace",
+      "string replace",
+      "match",
+      "regex",
+      "replace",
+      "replacement",
+      "pattern",
+      "substr",
+      "String.replace"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
